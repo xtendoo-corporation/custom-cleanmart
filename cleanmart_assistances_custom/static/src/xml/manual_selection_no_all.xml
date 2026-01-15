@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cleanmart_attendance.manual_selection_no_all" t-inherit="hr_attendance.public_kiosk_manual_selection" t-inherit-mode="extension">
+        <xpath expr="//a[@class='list-group-item py-3 list-group-item-action text-start']" position="replace">
+        </xpath>
+        <xpath expr="//a[@class='d-flex text-start text-reset p-3']" position="replace">
+        </xpath>
+    </t>
+</templates>
