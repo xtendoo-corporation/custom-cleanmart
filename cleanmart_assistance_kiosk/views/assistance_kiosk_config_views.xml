@@ -1,0 +1,29 @@
+<odoo>
+    <record id="view_assistance_kiosk_config_form" model="ir.ui.view">
+        <field name="name">assistance.kiosk.config.form</field>
+        <field name="model">assistance.kiosk.config</field>
+        <field name="arch" type="xml">
+            <form string="Configuración de Kiosko de Asistencias">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="department_ids" widget="many2many_tags"/>
+                        <field name="employee_ids" widget="many2many_tags"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_assistance_kiosk_config_tree" model="ir.ui.view">
+        <field name="name">assistance.kiosk.config.tree</field>
+        <field name="model">assistance.kiosk.config</field>
+        <field name="arch" type="xml">
+            <list string="Configuraciones de Kiosko">
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,13 @@
+<odoo>
+    <record id="action_assistance_kiosk_config" model="ir.actions.act_window">
+        <field name="name">Configuraciones de Kiosko</field>
+        <field name="res_model">assistance.kiosk.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_cleanmart_kiosk_mode" model="ir.actions.client">
+        <field name="name">Kiosko Cleanmart</field>
+        <field name="tag">cleanmart_assistance_kiosk.kiosk_mode</field>
+    </record>
+    <menuitem id="menu_cleanmart_assistance_kiosk_root" name="Kiosko Asistencias Cleanmart" parent="hr_attendance.menu_hr_attendance_root" sequence="5" action="action_cleanmart_kiosk_mode"/>
+    <menuitem id="menu_cleanmart_assistance_kiosk_config" name="Configuraciones de Kiosko Cleanmart" parent="hr_attendance.menu_hr_attendance_configuration" action="action_assistance_kiosk_config" sequence="100"/>
+</odoo>

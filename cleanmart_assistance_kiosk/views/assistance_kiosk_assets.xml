@@ -1,0 +1,7 @@
+<odoo>
+    <template id="cleanmart_kiosk_assets" inherit_id="web.assets_backend" name="Cleanmart Kiosk Assets">
+        <xpath expr="." position="inside">
+            <script type="module" src="/custom-cleanmart/cleanmart_assistance_kiosk/static/src/public_kiosk/cleanmart_kiosk_app.js"/>
+        </xpath>
+    </template>
+</odoo>
