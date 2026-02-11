@@ -2,15 +2,20 @@
 from odoo import http, _
 from odoo.http import request
 from odoo.addons.portal.controllers.portal import CustomerPortal
-from odoo.exceptions import AccessError, UserError
-import json
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
-class PortalAttendance(CustomerPortal):
+class CustomerPortalAttendance(CustomerPortal):
     
-    @http.route(['/my/attendance'], type='http', auth='user', website=True)
-    def portal_my_attendance(self, **kw):
-        """Página principal de asistencias del portal"""
+    @http.route(['/my/attendance', '/my/attendance/page/<int:page>'], type='http', auth='user', website=True)
+    def portal_my_attendance(self, page=1, **kw):
+        """Página principal de asistencias del empleado"""
+        _logger.info("[ATTENDANCE] ==================== START ====================")
+        _logger.info("[ATTENDANCE] Accessing /my/attendance route")
+        _logger.info("[ATTENDANCE] Current user: %s (ID: %s)", request.env.user.name, request.env.user.id)
+
         user = request.env.user
         employee = user.employee_id
         
@@ -72,11 +77,22 @@ class PortalAttendance(CustomerPortal):
     @http.route(['/my/attendance/history'], type='http', auth='user', website=True)
     def portal_attendance_history(self, page=1, date_begin=None, date_end=None, sortby=None, **kw):
         """Historial de asistencias del empleado"""
-        user = request.env.user
-        employee = user.employee_id
+        
+        # Obtener el empleado del usuario actual
+        employee = request.env['hr.employee'].sudo().search([
+            ('user_id', '=', request.env.user.id)
+        ], limit=1)
+        
+        _logger.info("[ATTENDANCE] Employee search result: %s", employee)
+        if employee:
+            _logger.info("[ATTENDANCE] Employee found: %s (ID: %s)", employee.name, employee.id)
+        else:
+            _logger.warning("[ATTENDANCE] No employee found for user %s", request.env.user.name)
         
         if not employee:
-            return request.render('cleanmart_portal_assistance.portal_attendance_no_employee')
+            _logger.info("[ATTENDANCE] Rendering no_employee template")
+            return request.render('cleanmart_portal_assistance.portal_attendance_no_employee', {})
+
         
         # Configurar búsqueda y paginación
         Attendance = request.env['hr.attendance']
