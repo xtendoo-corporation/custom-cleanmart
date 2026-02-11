@@ -1,6 +1,4 @@
-/** @odoo-module **/
-
-import { jsonrpc } from "@web/core/network/rpc_service";
+// Portal Attendance JavaScript - Vanilla JS (no Odoo modules needed)
 
 document.addEventListener('DOMContentLoaded', function() {
     const attendanceBtn = document.getElementById('attendanceActionBtn');
@@ -15,7 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
         attendanceBtn.innerHTML = '<span class="o_attendance_loading"></span> Procesando...';
         
         try {
-            const result = await jsonrpc('/my/attendance/action', {});
+            const response = await fetch('/my/attendance/action', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'call',
+                    params: {},
+                }),
+            });
+            
+            const data = await response.json();
+            const result = data.result || data;
             
             if (result.success) {
                 // Mostrar mensaje de éxito
