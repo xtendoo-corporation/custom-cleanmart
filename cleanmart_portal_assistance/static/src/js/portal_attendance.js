@@ -2,8 +2,9 @@
 
 console.log('[ATTENDANCE] Script loaded - START');
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('[ATTENDANCE] DOMContentLoaded event fired');
+// Función principal que inicializa el módulo
+function initAttendance() {
+    console.log('[ATTENDANCE] Initializing attendance module');
     
     const attendanceBtn = document.getElementById('attendanceActionBtn');
     const messageDiv = document.getElementById('attendanceMessage');
@@ -103,6 +104,16 @@ document.addEventListener('DOMContentLoaded', function() {
             hoursTodayElement.style.animation = '';
         }, 500);
     }
-});
+}
+
+// Ejecutar cuando el DOM esté listo
+// Verificar si el DOM ya está listo (el script puede cargarse después de DOMContentLoaded)
+if (document.readyState === 'loading') {
+    console.log('[ATTENDANCE] DOM still loading, waiting for DOMContentLoaded');
+    document.addEventListener('DOMContentLoaded', initAttendance);
+} else {
+    console.log('[ATTENDANCE] DOM already loaded, executing immediately');
+    initAttendance();
+}
 
 console.log('[ATTENDANCE] Script loaded - END');
