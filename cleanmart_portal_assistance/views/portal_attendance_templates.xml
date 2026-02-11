@@ -4,10 +4,10 @@
     <!-- Añadir menú en el portal -->
     <template id="portal_my_home_menu_attendance" name="Portal My Home Menu - Attendance"
         inherit_id="portal.portal_my_home" priority="30">
-        <xpath expr="//div[@class='o_portal_my_home']" position="inside">
+        <xpath expr="//div[hasclass('o_portal_my_home')]" position="inside">
             <t t-set="portal_client_category_enable" t-value="True" />
         </xpath>
-        <xpath expr="//div[@id='portal_client_category']" position="inside">
+        <div id="portal_client_category" position="inside">
             <t t-call="portal.portal_docs_entry">
                 <t t-set="icon" t-value="'/hr_attendance/static/description/icon.png'" />
                 <t t-set="title">Mi Asistencia</t>
@@ -15,7 +15,7 @@
                 <t t-set="text">Gestiona tu asistencia diaria</t>
                 <t t-set="placeholder_count" t-value="'attendance'" />
             </t>
-        </xpath>
+        </div>
     </template>
 
 
