@@ -13,7 +13,8 @@
 body:has(#kiosk_individual_app) {
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -25,11 +26,10 @@ body:has(#kiosk_individual_app) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 30px 20px;
     background: linear-gradient(135deg, #e0f7f5 0%, #f0f4f8 50%, #e8f1f5 100%);
     position: relative;
-    overflow: hidden;
 }
 
 /* Subtle background pattern */
@@ -466,6 +466,95 @@ body:has(#kiosk_individual_app) {
 /* ==================================================================
    RESPONSIVE DESIGN
    ================================================================== */
+
+/* Mobile Portrait Optimization (Vertical orientation) */
+@media (max-width: 580px) and (orientation: portrait) {
+    .kiosk-individual-container {
+        padding: 15px 10px;
+        min-height: 100vh;
+        justify-content: flex-start;
+    }
+    
+    /* Hide header and avatar on mobile to save space */
+    .kiosk-header {
+        display: none;
+    }
+    
+    .employee-avatar {
+        display: none;
+    }
+    
+    .employee-card {
+        padding: 20px 25px;
+        min-width: 280px;
+        border-radius: 18px;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    
+    .employee-name {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .attendance-status {
+        font-size: 13px;
+        padding: 6px 16px;
+    }
+    
+    .btn-kiosk-action {
+        font-size: 17px;
+        padding: 18px 24px;
+    }
+    
+    #pin-state {
+        padding: 20px 16px;
+        border-radius: 18px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
+    #pin-state h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+    
+    .pin-display {
+        min-height: 50px;
+        margin-bottom: 16px;
+        padding: 10px;
+    }
+    
+    .pin-dots {
+        font-size: 24px;
+        letter-spacing: 10px;
+    }
+    
+    .pin-keypad {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+    
+    .keypad-btn {
+        padding: 14px;
+        font-size: 20px;
+        min-height: 58px;
+        border-radius: 12px;
+    }
+    
+    .btn-cancel {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .error-message {
+        padding: 10px 12px;
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+}
+
+/* General mobile styles (Landscape or general) */
 @media (max-width: 580px) {
     .kiosk-individual-container {
         padding: 20px 15px;
@@ -481,9 +570,14 @@ body:has(#kiosk_individual_app) {
         border-radius: 20px;
     }
     
-    .employee-avatar img {
+    .employee-avatar img,
+    .avatar-placeholder {
         width: 110px;
         height: 110px;
+    }
+    
+    .avatar-placeholder i {
+        font-size: 70px;
     }
     
     .employee-name {
@@ -501,31 +595,186 @@ body:has(#kiosk_individual_app) {
     }
     
     #pin-state {
-        padding: 32px 28px;
+        padding: 28px 20px;
+        border-radius: 20px;
+    }
+    
+    #pin-state h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .pin-display {
+        min-height: 55px;
+        margin-bottom: 20px;
+        padding: 12px;
+    }
+    
+    .pin-dots {
+        font-size: 28px;
+        letter-spacing: 12px;
+    }
+    
+    .pin-keypad {
+        gap: 10px;
+        margin-bottom: 18px;
     }
     
     .keypad-btn {
         padding: 16px;
         font-size: 22px;
         min-height: 64px;
+        border-radius: 12px;
+    }
+    
+    .btn-cancel {
+        padding: 12px;
+        font-size: 15px;
     }
 }
 
+/* Small Mobile Portrait (Vertical orientation) */
+@media (max-width: 380px) and (orientation: portrait) {
+    .kiosk-individual-container {
+        padding: 10px 8px;
+        justify-content: flex-start;
+    }
+    
+    /* Hide header and avatar on small mobile to save space */
+    .kiosk-header {
+        display: none;
+    }
+    
+    .employee-avatar {
+        display: none;
+    }
+    
+    .employee-card {
+        min-width: 250px;
+        padding: 18px 20px;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    
+    .employee-name {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+    
+    .attendance-status {
+        font-size: 12px;
+        padding: 5px 14px;
+    }
+    
+    .btn-kiosk-action {
+        font-size: 16px;
+        padding: 16px 20px;
+    }
+    
+    #pin-state {
+        padding: 18px 14px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
+    #pin-state h3 {
+        font-size: 17px;
+        margin-bottom: 14px;
+    }
+    
+    .pin-display {
+        min-height: 45px;
+        margin-bottom: 14px;
+        padding: 8px;
+    }
+    
+    .pin-dots {
+        font-size: 22px;
+        letter-spacing: 8px;
+    }
+    
+    .pin-keypad {
+        gap: 7px;
+        margin-bottom: 12px;
+    }
+    
+    .keypad-btn {
+        padding: 12px;
+        font-size: 18px;
+        min-height: 52px;
+        border-radius: 10px;
+    }
+    
+    .btn-cancel {
+        padding: 9px;
+        font-size: 13px;
+    }
+    
+    .error-message {
+        padding: 8px 10px;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Small Mobile General */
 @media (max-width: 380px) {
     .employee-card {
         min-width: 260px;
         padding: 28px 24px;
     }
     
-    .employee-avatar img {
+    .employee-avatar img,
+    .avatar-placeholder {
         width: 95px;
         height: 95px;
     }
     
+    .avatar-placeholder i {
+        font-size: 60px;
+    }
+    
+    #pin-state {
+        padding: 24px 16px;
+    }
+    
+    #pin-state h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+    
+    .pin-display {
+        min-height: 50px;
+        margin-bottom: 16px;
+        padding: 10px;
+    }
+    
+    .pin-dots {
+        font-size: 24px;
+        letter-spacing: 10px;
+    }
+    
+    .pin-keypad {
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    
     .keypad-btn {
         font-size: 20px;
-        padding: 14px;
-        min-height: 58px;
+        padding: 12px;
+        min-height: 56px;
+        border-radius: 10px;
+    }
+    
+    .btn-cancel {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .error-message {
+        padding: 10px 14px;
+        font-size: 14px;
+        margin-bottom: 14px;
     }
 }
 

@@ -39,16 +39,9 @@
                     <!-- Employee card -->
                     <div class="employee-card">
                         <div class="employee-avatar">
-                            <t t-if="employee.get('has_real_photo')">
-                                <img
-                                    t-att-src="'data:image/png;base64,' + employee['image_128'].decode('utf-8')"
-                                    alt="Employee Photo" />
-                            </t>
-                            <t t-else="">
-                                <div class="avatar-placeholder">
-                                    <i class="fa fa-user-circle" />
-                                </div>
-                            </t>
+                            <div class="avatar-placeholder">
+                                <i class="fa fa-user-circle" />
+                            </div>
                         </div>
                         <h2 class="employee-name">
                             <t t-esc="employee.get('display_name') or employee.get('name')" />
