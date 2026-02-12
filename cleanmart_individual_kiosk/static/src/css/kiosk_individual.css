@@ -1,0 +1,556 @@
+/* ==================================================================
+   CLEANMART INDIVIDUAL KIOSK - PROFESSIONAL DESIGN
+   Brand Colors: Teal (#00b8a9) + Dark Blue (#1e3a5f)
+   Mobile-first, responsive design for touch interfaces
+   ================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body:has(#kiosk_individual_app) {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ==================================================================
+   MAIN CONTAINER
+   ================================================================== */
+.kiosk-individual-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #e0f7f5 0%, #f0f4f8 50%, #e8f1f5 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle background pattern */
+.kiosk-individual-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 184, 169, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(30, 58, 95, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* ==================================================================
+   HEADER
+   ================================================================== */
+.kiosk-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.kiosk-header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 0;
+    color: #1e3a5f;
+    letter-spacing: -0.8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ==================================================================
+   EMPLOYEE CARD
+   ================================================================== */
+.employee-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 55px 50px;
+    text-align: center;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.06),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+    margin-bottom: 40px;
+    min-width: 450px;
+    max-width: 600px;
+    width: 100%;
+    border: 1px solid rgba(0, 184, 169, 0.1);
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.employee-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 48px rgba(0, 0, 0, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Employee Avatar */
+.employee-avatar {
+    margin-bottom: 24px;
+}
+
+.employee-avatar img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #00b8a9;
+    box-shadow: 
+        0 8px 24px rgba(0, 184, 169, 0.25),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.employee-avatar img:hover {
+    transform: scale(1.05);
+}
+
+/* Avatar Placeholder Icon */
+.avatar-placeholder {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e0f7f5 0%, #d0ede9 100%);
+    border: 4px solid #00b8a9;
+    box-shadow: 
+        0 8px 24px rgba(0, 184, 169, 0.25),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    margin: 0 auto;
+}
+
+.avatar-placeholder:hover {
+    transform: scale(1.05);
+}
+
+.avatar-placeholder i {
+    font-size: 100px;
+    color: #00b8a9;
+}
+
+/* Employee Name */
+.employee-name {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin: 0 0 18px 0;
+    letter-spacing: -0.5px;
+}
+
+/* Attendance Status Badge */
+.attendance-status {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.attendance-status[data-state="checked_in"] {
+    background: linear-gradient(135deg, #d4f4dd 0%, #c6f6d5 100%);
+    color: #047857;
+    box-shadow: 0 3px 12px rgba(4, 120, 87, 0.15);
+}
+
+.attendance-status[data-state="checked_out"] {
+    background: linear-gradient(135deg, #f0f3f7 0%, #e8ecf1 100%);
+    color: #5a6c7d;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.attendance-status i {
+    font-size: 12px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* ==================================================================
+   ACTION AREA
+   ================================================================== */
+.action-area {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Main Action Button */
+.btn-kiosk-action {
+    width: 100%;
+    padding: 26px 40px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, #00b8a9 0%, #00a094 100%);
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 
+        0 8px 24px rgba(0, 184, 169, 0.35),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-kiosk-action::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn-kiosk-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 32px rgba(0, 184, 169, 0.45),
+        0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.btn-kiosk-action:hover::before {
+    left: 100%;
+}
+
+.btn-kiosk-action:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 
+        0 4px 16px rgba(0, 184, 169, 0.3),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.btn-kiosk-action i {
+    font-size: 22px;
+}
+
+/* ==================================================================
+   PIN STATE
+   ================================================================== */
+#pin-state {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 50px 45px;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.06),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 184, 169, 0.1);
+}
+
+#pin-state h3 {
+    text-align: center;
+    color: #1e3a5f;
+    margin: 0 0 32px 0;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+}
+
+/* PIN Display */
+.pin-display {
+    text-align: center;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border-radius: 14px;
+    padding: 18px;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.pin-display:focus-within {
+    border-color: #00b8a9;
+    box-shadow: 0 0 0 3px rgba(0, 184, 169, 0.1);
+}
+
+.pin-dots {
+    font-size: 38px;
+    letter-spacing: 16px;
+    color: #00b8a9;
+    font-weight: bold;
+}
+
+/* PIN Keypad */
+.pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.keypad-btn {
+    padding: 24px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e3a5f;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 82px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.keypad-btn:hover {
+    background: linear-gradient(135deg, #e8f1f5 0%, #dce9f0 100%);
+    border-color: #00b8a9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 184, 169, 0.15);
+}
+
+.keypad-btn:active {
+    background: #dce9f0;
+    transform: scale(0.96);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* OK Button (Confirm) */
+.keypad-btn.btn-ok {
+    background: linear-gradient(135deg, #00b8a9 0%, #00a094 100%);
+    color: #ffffff;
+    border-color: #00a094;
+    box-shadow: 0 4px 12px rgba(0, 184, 169, 0.3);
+}
+
+.keypad-btn.btn-ok:hover {
+    background: linear-gradient(135deg, #00a094 0%, #008c7f 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 184, 169, 0.4);
+}
+
+.keypad-btn.btn-ok:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 8px rgba(0, 184, 169, 0.25);
+}
+
+/* Backspace Button */
+.keypad-btn.btn-backspace {
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+    color: #c53030;
+    border-color: #fc8181;
+}
+
+.keypad-btn.btn-backspace:hover {
+    background: linear-gradient(135deg, #fed7d7 0%, #fbd5d5 100%);
+    border-color: #f56565;
+    box-shadow: 0 4px 12px rgba(197, 48, 48, 0.2);
+}
+
+/* Error Message */
+.error-message {
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+    color: #c53030;
+    padding: 14px 18px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 18px;
+    font-weight: 600;
+    border: 2px solid #fc8181;
+    box-shadow: 0 4px 12px rgba(197, 48, 48, 0.15);
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+/* Cancel Button */
+.btn-cancel {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #5a6c7d;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.btn-cancel:hover {
+    background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+    border-color: #cbd5e0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-cancel:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* ==================================================================
+   SUCCESS STATE
+   ================================================================== */
+#success-state {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 60px 40px;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.06),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+    text-align: center;
+    border: 1px solid rgba(0, 184, 169, 0.1);
+}
+
+.success-icon {
+    font-size: 90px;
+    color: #00b8a9;
+    margin-bottom: 24px;
+    animation: checkmark 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    filter: drop-shadow(0 4px 12px rgba(0, 184, 169, 0.3));
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+#success-state h3 {
+    color: #1e3a5f;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.5px;
+}
+
+.success-subtitle {
+    color: #5a6c7d;
+    font-size: 17px;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ==================================================================
+   RESPONSIVE DESIGN
+   ================================================================== */
+@media (max-width: 580px) {
+    .kiosk-individual-container {
+        padding: 20px 15px;
+    }
+    
+    .kiosk-header h1 {
+        font-size: 26px;
+    }
+    
+    .employee-card {
+        padding: 35px 30px;
+        min-width: 300px;
+        border-radius: 20px;
+    }
+    
+    .employee-avatar img {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .employee-name {
+        font-size: 22px;
+    }
+    
+    .attendance-status {
+        font-size: 14px;
+        padding: 8px 20px;
+    }
+    
+    .btn-kiosk-action {
+        font-size: 18px;
+        padding: 20px 28px;
+    }
+    
+    #pin-state {
+        padding: 32px 28px;
+    }
+    
+    .keypad-btn {
+        padding: 16px;
+        font-size: 22px;
+        min-height: 64px;
+    }
+}
+
+@media (max-width: 380px) {
+    .employee-card {
+        min-width: 260px;
+        padding: 28px 24px;
+    }
+    
+    .employee-avatar img {
+        width: 95px;
+        height: 95px;
+    }
+    
+    .keypad-btn {
+        font-size: 20px;
+        padding: 14px;
+        min-height: 58px;
+    }
+}
+
+/* ==================================================================
+   TOUCH OPTIMIZATION
+   ================================================================== */
+
+/* Prevent text selection and improve touch feedback */
+.kiosk-individual-container * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Larger touch targets for better accessibility */
+@media (hover: none) and (pointer: coarse) {
+    .btn-kiosk-action,
+    .keypad-btn {
+        min-height: 72px;
+    }
+    
+    .btn-cancel {
+        min-height: 54px;
+    }
+}

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Template for unauthorized access -->
+    <template id="kiosk_individual_not_authorized" name="Individual Kiosk - Not Authorized">
+        <t t-call="web.layout">
+            <div class="container mt-5">
+                <div class="alert alert-danger text-center" role="alert">
+                    <h1><i class="fa fa-ban" /> Acceso No Autorizado</h1>
+                    <p class="lead">Este empleado no tiene acceso al kiosco individual.</p>
+                    <p>Por favor, contacta con tu administrador para obtener acceso.</p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Main individual kiosk page template - Standalone HTML -->
+    <template id="kiosk_individual_page" name="Individual Kiosk Page">
+        <![CDATA[<!DOCTYPE html>]]>
+        <html>
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport"
+                    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+                <title>Kiosco de Asistencias</title>
+                <link rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <link rel="stylesheet" type="text/css"
+                    href="/cleanmart_individual_kiosk/static/src/css/kiosk_individual.css" />
+            </head>
+            <body>
+                <div id="kiosk_individual_app" class="kiosk-individual-container">
+
+                    <!-- Employee info header -->
+                    <div class="kiosk-header">
+                        <h1>Kiosco de Asistencias</h1>
+                    </div>
+
+                    <!-- Employee card -->
+                    <div class="employee-card">
+                        <div class="employee-avatar">
+                            <t t-if="employee.get('has_real_photo')">
+                                <img
+                                    t-att-src="'data:image/png;base64,' + employee['image_128'].decode('utf-8')"
+                                    alt="Employee Photo" />
+                            </t>
+                            <t t-else="">
+                                <div class="avatar-placeholder">
+                                    <i class="fa fa-user-circle" />
+                                </div>
+                            </t>
+                        </div>
+                        <h2 class="employee-name">
+                            <t t-esc="employee.get('display_name') or employee.get('name')" />
+                        </h2>
+                        <div class="attendance-status"
+                            t-att-data-state="employee.get('attendance_state')">
+                            <t t-if="employee.get('attendance_state') == 'checked_in'">
+                                <i class="fa fa-circle text-success" /> Trabajando </t>
+                            <t t-else="">
+                                <i class="fa fa-circle text-muted" /> Fuera </t>
+                        </div>
+                    </div>
+
+                    <!-- Main action area -->
+                    <div class="action-area" id="action-area">
+
+                        <!-- Initial state: Show action button -->
+                        <div id="initial-state">
+                            <button type="button" class="btn-kiosk-action" id="btn-action">
+                                <t t-if="employee.get('attendance_state') == 'checked_in'">
+                                    <i class="fa fa-sign-out" /> Registrar Salida </t>
+                                <t t-else="">
+                                    <i class="fa fa-sign-in" /> Registrar Entrada </t>
+                            </button>
+                        </div>
+
+                        <!-- PIN entry state -->
+                        <div id="pin-state" style="display: none;">
+                            <h3>Introduce tu PIN</h3>
+                            <div class="pin-display" id="pin-display">
+                                <span class="pin-dots"></span>
+                            </div>
+                            <div class="pin-keypad" id="pin-keypad">
+                                <button type="button" class="keypad-btn" data-value="1">1</button>
+                                <button type="button" class="keypad-btn" data-value="2">2</button>
+                                <button type="button" class="keypad-btn" data-value="3">3</button>
+                                <button type="button" class="keypad-btn" data-value="4">4</button>
+                                <button type="button" class="keypad-btn" data-value="5">5</button>
+                                <button type="button" class="keypad-btn" data-value="6">6</button>
+                                <button type="button" class="keypad-btn" data-value="7">7</button>
+                                <button type="button" class="keypad-btn" data-value="8">8</button>
+                                <button type="button" class="keypad-btn" data-value="9">9</button>
+                                <button type="button" class="keypad-btn btn-backspace"
+                                    data-value="backspace">
+                                    <i class="fa fa-arrow-left" />
+                                </button>
+                                <button type="button" class="keypad-btn" data-value="0">0</button>
+                                <button type="button" class="keypad-btn btn-ok" data-value="ok">
+                                    <i class="fa fa-check" />
+                                </button>
+                            </div>
+                            <div class="error-message" id="error-message" style="display: none;"></div>
+                            <button type="button" class="btn-cancel" id="btn-cancel">
+                                Cancelar
+                            </button>
+                        </div>
+
+                        <!-- Success state -->
+                        <div id="success-state" style="display: none;">
+                            <div class="success-icon">
+                                <i class="fa fa-check-circle" />
+                            </div>
+                            <h3 id="success-message">¡Asistencia registrada!</h3>
+                            <p class="success-subtitle">Redirigiendo...</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Hidden employee data for JavaScript -->
+                    <script type="application/json" id="employee-data"> { "id": <t
+                            t-esc="employee.get('id')" />, "name": "<t
+                            t-esc="employee.get('display_name') or employee.get('name')" />",
+                        "attendance_state": "<t t-esc="employee.get('attendance_state')" />" } </script>
+
+                    <script type="text/javascript"
+                        src="/cleanmart_individual_kiosk/static/src/js/kiosk_individual.js"></script>
+
+                </div>
+            </body>
+        </html>
+    </template>
+
+</odoo>

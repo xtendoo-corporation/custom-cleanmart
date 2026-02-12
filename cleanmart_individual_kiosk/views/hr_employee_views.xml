@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Extend employee form view to add individual kiosk configuration -->
+    <record id="view_employee_form_individual_kiosk" model="ir.ui.view">
+        <field name="name">hr.employee.form.individual.kiosk</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+
+            <!-- Add new page in notebook for individual kiosk settings -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Kiosco Individual" name="individual_kiosk">
+                    <group>
+                        <group>
+                            <field name="is_individual_kiosk" />
+                        </group>
+                        <group>
+                            <field name="individual_kiosk_url" readonly="1"
+                                widget="CopyClipboardChar"
+                                invisible="not is_individual_kiosk" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
