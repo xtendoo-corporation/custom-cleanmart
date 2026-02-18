@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Template for unauthorized access -->
+    <template id="kiosk_department_not_authorized" name="Department Kiosk - Not Authorized">
+        <t t-call="web.layout">
+            <div class="container mt-5">
+                <div class="alert alert-danger text-center" role="alert">
+                    <h1><i class="fa fa-ban" /> Acceso No Autorizado</h1>
+                    <p class="lead">Este departamento no tiene habilitado el kiosco.</p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Main department kiosk page template -->
+    <template id="kiosk_department_page" name="Department Kiosk Page">
+        <![CDATA[<!DOCTYPE html>]]>
+        <html>
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport"
+                    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+                <title>Kiosco <t t-esc="department.name" /></title>
+                <link rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <link rel="stylesheet" type="text/css"
+                    href="/cleanmart_departament_kiosk/static/src/css/kiosk_department.css" />
+            </head>
+            <body>
+                <div id="kiosk_department_app" class="kiosk-container">
+
+                    <!-- Header -->
+                    <div class="kiosk-header">
+                        <h1>Kiosco <t t-esc="department.name" /></h1>
+                    </div>
+
+                    <div class="main-content">
+                        <!-- Employee Selection State -->
+                        <div id="selection-state" class="state-container">
+                            <div class="employee-grid">
+                                <t t-foreach="employees" t-as="employee">
+                                    <div class="employee-item"
+                                        t-att-data-employee-id="employee['id']"
+                                        t-att-data-employee-name="employee['display_name']"
+                                        t-att-data-state="employee['attendance_state']">
+                                        <div class="employee-avatar">
+                                            <t t-if="employee['has_real_photo']">
+                                                <img
+                                                    t-att-src="'/web/image/hr.employee/%s/image_128' % employee['id']"
+                                                    alt="Avatar" />
+                                            </t>
+                                            <t t-else="">
+                                                <i class="fa fa-user-circle" />
+                                            </t>
+                                        </div>
+                                        <div class="employee-info">
+                                            <span class="employee-name">
+                                                <t t-esc="employee['display_name']" />
+                                            </span>
+                                            <div class="attendance-badge"
+                                                t-att-data-state="employee['attendance_state']">
+                                                <t
+                                                    t-if="employee['attendance_state'] == 'checked_in'">
+                                                    <i class="fa fa-circle" /> Trabajando </t>
+                                                <t t-else="">
+                                                    <i class="fa fa-circle-o" /> Fuera </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- PIN entry state -->
+                        <div id="pin-state" class="state-container" style="display: none;">
+                            <div class="selection-summary">
+                                <div id="selected-employee-avatar" class="mini-avatar"></div>
+                                <h2 id="selected-employee-name">Empleado</h2>
+                            </div>
+                            <h3>Introduce tu PIN</h3>
+                            <div class="pin-display" id="pin-display">
+                                <span class="pin-dots"></span>
+                            </div>
+                            <div class="pin-keypad" id="pin-keypad">
+                                <button type="button" class="keypad-btn" data-value="1">1</button>
+                                <button type="button" class="keypad-btn" data-value="2">2</button>
+                                <button type="button" class="keypad-btn" data-value="3">3</button>
+                                <button type="button" class="keypad-btn" data-value="4">4</button>
+                                <button type="button" class="keypad-btn" data-value="5">5</button>
+                                <button type="button" class="keypad-btn" data-value="6">6</button>
+                                <button type="button" class="keypad-btn" data-value="7">7</button>
+                                <button type="button" class="keypad-btn" data-value="8">8</button>
+                                <button type="button" class="keypad-btn" data-value="9">9</button>
+                                <button type="button" class="keypad-btn btn-backspace"
+                                    data-value="backspace">
+                                    <i class="fa fa-arrow-left" />
+                                </button>
+                                <button type="button" class="keypad-btn" data-value="0">0</button>
+                                <button type="button" class="keypad-btn btn-ok" data-value="ok">
+                                    <i class="fa fa-check" />
+                                </button>
+                            </div>
+                            <div class="error-message" id="error-message" style="display: none;"></div>
+                            <button type="button" class="btn-cancel" id="btn-cancel">
+                                Cancelar
+                            </button>
+                        </div>
+
+                        <!-- Success state -->
+                        <div id="success-state" class="state-container" style="display: none;">
+                            <div class="success-icon">
+                                <i class="fa fa-check-circle" />
+                            </div>
+                            <h3 id="success-message">¡Asistencia registrada!</h3>
+                            <p class="success-subtitle">Actualizando...</p>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript"
+                        src="/cleanmart_departament_kiosk/static/src/js/kiosk_department.js"></script>
+                </div>
+            </body>
+        </html>
+    </template>
+
+</odoo>
