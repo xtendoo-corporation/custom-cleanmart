@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- La cabecera con la dirección de la compañía pertenece al layout de informe
+         (layout "Bold" en Cleanmart). Se hereda y se limita a facturas. -->
+    <template id="external_layout_bold_iso14001" inherit_id="web.external_layout_bold">
+        <!-- Columna del logo: más estrecha en facturas para dejar sitio al sello -->
+        <xpath expr="//div[@name='company_address']/preceding-sibling::div[1]" position="attributes">
+            <attribute name="class" remove="col-6" separator=" "/>
+            <attribute name="t-attf-class">{{ 'col-5' if o and o._name == 'account.move' else 'col-6' }}</attribute>
+        </xpath>
+        <!-- Columna de dirección: más ancha en facturas, texto alineado a la derecha -->
+        <xpath expr="//div[@name='company_address']" position="attributes">
+            <attribute name="class" remove="col-5 offset-1" separator=" "/>
+            <attribute name="t-attf-class">{{ 'col-7 text-end' if o and o._name == 'account.move' else 'col-5 offset-1' }}</attribute>
+        </xpath>
+        <xpath expr="//div[@name='company_address']/ul[@name='company_address_list']" position="before">
+            <img t-if="o and o._name == 'account.move'"
+                 src="/cleanmart_document_format/static/src/img/iso14001.png"
+                 alt="ISO 14001"
+                 style="float: left; max-height: 120px; margin: 0 20px 0 0;"/>
+        </xpath>
+        <!-- Pie más pequeño en facturas: el texto RGPD no cabe en el margen inferior del A4 -->
+        <xpath expr="//div[contains(@t-attf-class, 'footer o_company')]" position="attributes">
+            <attribute name="t-attf-style">{{ 'font-size: 11px; line-height: 1.2;' if o and o._name == 'account.move' else '' }}</attribute>
+        </xpath>
+    </template>
+</odoo>
