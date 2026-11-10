@@ -1,6 +1,6 @@
 {
     "name": "Cleanmart Document Format",
-    "summary": "Añade el sello ISO 14001 en la cabecera de las facturas de Cleanmart",
+    "summary": "Añade el sello ISO 14001 en la cabecera de las facturas de Cleanmart y oculta la comunicación de pago",
     "version": "19.0.1.0.0",
     "category": "Accounting",
     "author": "Xtendoo",

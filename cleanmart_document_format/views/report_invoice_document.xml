@@ -24,4 +24,18 @@
             <attribute name="t-attf-style">{{ 'font-size: 11px; line-height: 1.2;' if o and o._name == 'account.move' else '' }}</attribute>
         </xpath>
     </template>
+
+    <!-- Elimina "Comunicación de pago" del PDF de la factura -->
+    <template id="report_invoice_document_no_payment_communication" inherit_id="account.report_invoice_document">
+        <xpath expr="//p[@name='payment_communication']/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+
+    <!-- Impuestos de línea: solo el porcentaje (sin sufijos como "G" de la etiqueta) -->
+    <template id="report_invoice_document_tax_percent" inherit_id="account.report_invoice_document">
+        <xpath expr="//span[@id='line_tax_ids']" position="attributes">
+            <attribute name="t-out">', '.join(('{:g}'.format(tax.amount) + '%') if tax.amount_type == 'percent' else (tax.tax_label or tax.name) for tax in line.tax_ids)</attribute>
+        </xpath>
+    </template>
 </odoo>
