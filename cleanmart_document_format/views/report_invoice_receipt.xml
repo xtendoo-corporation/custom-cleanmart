@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Segunda impresión de factura: idéntica a la estándar + recibo bancario debajo -->
+    <template id="report_invoice_with_receipt">
+        <t t-call="account.report_invoice_with_payments">
+            <t t-set="print_receipt" t-value="True"/>
+        </t>
+    </template>
+
+    <record id="action_report_invoice_with_receipt" model="ir.actions.report">
+        <field name="name">Factura con recibo</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cleanmart_document_format.report_invoice_with_receipt</field>
+        <field name="report_file">cleanmart_document_format.report_invoice_with_receipt</field>
+        <field name="print_report_name">(object._get_report_base_filename()) + '_recibo'</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="group_ids" eval="[(4, ref('account.group_account_invoice')), (4, ref('account.group_account_readonly'))]"/>
+    </record>
+
+    <!-- Bloque del recibo, solo cuando se imprime con este informe -->
+    <template id="report_invoice_document_receipt" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[hasclass('invoice_main')]" position="after">
+            <t t-if="print_receipt and o.move_type in ('out_invoice', 'out_refund')">
+                <t t-set="receipt_bank" t-value="o.partner_bank_id or o.partner_id.bank_ids[:1]"/>
+                <t t-set="receipt_acc" t-value="(receipt_bank.sanitized_acc_number or '') if receipt_bank else ''"/>
+                <t t-set="receipt_ccc" t-value="receipt_acc[4:] if receipt_acc[:2].isalpha() else receipt_acc"/>
+                <div class="o_cleanmart_receipt" style="page-break-inside: avoid; margin-top: 30px; padding-top: 10px; border-top: 1px dashed #666; font-size: 12px;">
+                    <div class="mb-2">Recibo</div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div>Nº Factura</div>
+                            <div><span t-field="o.name"/></div>
+                        </div>
+                        <div class="col-3">
+                            <div>Fecha</div>
+                            <div><span t-out="(o.invoice_date or o.date).strftime('%d-%m-%y')"/></div>
+                        </div>
+                        <div class="col-3">
+                            <div>Importe Euros</div>
+                            <div><span t-out="'{:,.2f}'.format(o.amount_total).replace(',', 'X').replace('.', ',').replace('X', '.')"/></div>
+                        </div>
+                        <div class="col-3 text-end">Nº Cuenta<br/>
+                            <span t-out="' '.join([receipt_ccc[0:4], receipt_ccc[4:8], receipt_ccc[8:10], receipt_ccc[10:20]])"/>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <div>Forma de Pago</div>
+                            <div>Recibo bancario</div>
+                        </div>
+                        <div class="col-3">
+                            <div>Caja - Banco</div>
+                        </div>
+                        <div class="col-6 text-end">
+                            <div>Nombre del Expedidor</div>
+                            <div><strong t-field="o.company_id.name"/></div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <div>Librado<span style="margin-left: 40px;" t-out="o.partner_id.ref or o.partner_id.id"/></div>
+                            <div style="font-size: 15px;"><strong t-field="o.partner_id.name"/></div>
+                            <div><span t-field="o.partner_id.street"/></div>
+                            <div><span t-field="o.partner_id.zip"/> <span t-field="o.partner_id.city"/></div>
+                            <div>NIF - C.I.F <span t-field="o.partner_id.vat"/></div>
+                        </div>
+                        <div class="col-6 text-end">Firmar</div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>
